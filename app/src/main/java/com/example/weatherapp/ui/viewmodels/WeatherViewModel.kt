@@ -7,18 +7,24 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
 import com.example.weatherapp.data.weather.api.ForecastType
+import com.example.weatherapp.data.weather.model.processed.CurrentWeather
+import com.example.weatherapp.data.weather.model.processed.DailyWeather
+import com.example.weatherapp.data.weather.model.processed.HourlyWeather
 import com.example.weatherapp.data.weather.model.raw.WeatherInfo
 import com.example.weatherapp.data.weatherbycity.WeatherByCityRepository
-import com.example.weatherapp.ui.CommonParameters
+import com.example.weatherapp.ui.ApiParameters
+import com.example.weatherapp.ui.enums.City
+import com.example.weatherapp.ui.enums.TemperatureUnit
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 sealed interface WeatherUiState {
     data class Success(
-        val currentWeather: WeatherInfo,
-        val hourlyWeather: WeatherInfo,
-        val dailyWeather: WeatherInfo
+        val currentWeather: CurrentWeather,
+        val hourlyWeather: List<HourlyWeather>,
+        val dailyWeather: List<DailyWeather>
     ) : WeatherUiState
     data class Error(val message: String) : WeatherUiState
     data object Loading : WeatherUiState
@@ -31,7 +37,8 @@ class WeatherViewModel(
     private val _weatherState = MutableLiveData<WeatherUiState>(WeatherUiState.Loading)
     val weatherState: LiveData<WeatherUiState> = _weatherState
 
-    var currentCity: String = "Izhevsk"
+    var currentCity: City = City.IZHEVSK
+    var currentTempUnit: TemperatureUnit = TemperatureUnit.CELSIUS
 
     init {
         loadWeather()
@@ -46,7 +53,11 @@ class WeatherViewModel(
                     async { loadHourlyWeather() },
                     async { loadDailyWeather() }
                 )
-                _weatherState.value = WeatherUiState.Success(current, hourly, daily)
+                _weatherState.value = WeatherUiState.Success(
+                    current as CurrentWeather,
+                    hourly as List<HourlyWeather>,
+                    daily as List<DailyWeather>
+                )
             } catch (e: Exception) {
                 _weatherState.value = WeatherUiState.Error(e.message ?: "Unknown error")
             }
@@ -54,13 +65,13 @@ class WeatherViewModel(
     }
 
     private suspend fun loadCurrentWeather() =
-        repository.getWeather(currentCity, 1, ForecastType.CURRENT, CommonParameters.currentParams)
+        repository.getCurrentWeather(currentCity.apiName, ApiParameters.currentParams)
 
     private suspend fun loadHourlyWeather() =
-        repository.getWeather(currentCity, 1, ForecastType.HOURLY, CommonParameters.hourlyParams)
+        repository.getHourlyWeather(currentCity.apiName, ApiParameters.hourlyParams)
 
     private suspend fun loadDailyWeather() =
-        repository.getWeather(currentCity, CommonParameters.daysCountForDailyWeather, ForecastType.DAILY, CommonParameters.dailyParams)
+        repository.getDailyWeather(currentCity.apiName, ApiParameters.dailyParams, ApiParameters.daysCountForDailyWeather)
 
     companion object {
         fun create(owner: ViewModelStoreOwner, repository: WeatherByCityRepository)

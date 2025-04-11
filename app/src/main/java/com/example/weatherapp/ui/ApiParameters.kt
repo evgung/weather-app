@@ -1,6 +1,6 @@
 package com.example.weatherapp.ui
 
-object CommonParameters {
+object ApiParameters {
 
     val daysCountForDailyWeather = 7
 
@@ -22,9 +22,5 @@ object CommonParameters {
         "temperature_2m_max",
         "temperature_2m_min",
     )
-
-    object AvailableUnits {
-        val temperature = listOf("")
-    }
 
 }

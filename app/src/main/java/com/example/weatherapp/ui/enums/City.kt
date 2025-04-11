@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui
+package com.example.weatherapp.ui.enums
 
 enum class City(
     val apiName: String,
@@ -11,10 +11,4 @@ enum class City(
     NOVOSIBIRSK("Novosibirsk", "Новосибирск"),
     KAZAN("Kazan", "Казань"),
     SOCHI("Sochi", "Сочи");
-
-    companion object {
-        fun fromApiName(apiName: String): City? {
-            return values().find { it.apiName.equals(apiName, ignoreCase = true) }
-        }
-    }
 }

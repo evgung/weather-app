@@ -8,45 +8,35 @@
     tools:context=".ui.MainActivity">
 
     <TextView
+        android:id="@+id/tvCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Ижевск"/>
+
+    <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Текущая погода в Ижевске"
+        android:text="Текущая погода"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvCity" />
 
     <TextView
         android:id="@+id/tvTemperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:text="+6"/>
 
-    <TextView
-        android:id="@+id/tvApparentTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTemperature" />
-
-    <TextView
-        android:id="@+id/tvHumidity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvApparentTemperature" />
-
-    <TextView
-        android:id="@+id/tvPressure"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHumidity" />
 
     <TextView
         android:id="@+id/tvWeather"
@@ -54,6 +44,73 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPressure" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTemperature"
+        tools:text="Облачно"/>
+
+    <LinearLayout
+        android:id="@+id/llApparentTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvWeather">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ощущается как: "/>
+
+        <TextView
+            android:id="@+id/tvApparentTemperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="+2"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llApparentTemperature">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Влажность: "/>
+
+        <TextView
+            android:id="@+id/tvHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="50%"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llHumidity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Давление: "/>
+
+        <TextView
+            android:id="@+id/tvPressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="750 мм рт.ст."/>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
