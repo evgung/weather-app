@@ -8,7 +8,7 @@ import com.example.weatherapp.data.weather.model.processed.DailyWeather
 import com.example.weatherapp.data.weather.model.processed.HourlyWeather
 import com.example.weatherapp.data.weather.model.raw.WeatherInfo
 
-interface WeatherByCity {
+interface IWeatherByCityRepository {
     suspend fun getWeather(
         cityName: String,
         forecastDays: Int,
@@ -36,7 +36,7 @@ interface WeatherByCity {
 class WeatherByCityRepository(
     private val weatherRepository: WeatherRepository,
     private val cityRepository: CityRepository
-) : WeatherByCity {
+) : IWeatherByCityRepository {
 
     override suspend fun getWeather(
         cityName: String,

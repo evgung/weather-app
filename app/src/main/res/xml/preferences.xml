@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:layout="@layout/preference_header">
+    </Preference>
+
+    <PreferenceCategory
+        app:title="@string/location_title"
+        app:iconSpaceReserved="false"
+        app:layout="@layout/preference_category_material">
+
+        <ListPreference
+            android:key="@string/city_pref_key"
+            android:title="@string/city_title"
+            android:summary="@string/city_summary"
+            android:dialogTitle="@string/city_dialog_title"
+            android:icon="@drawable/ic_location"
+            app:layout="@layout/preference_item_material" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/units_title"
+        app:iconSpaceReserved="false"
+        app:layout="@layout/preference_category_material">
+
+        <ListPreference
+            android:key="@string/temp_unit_pref_key"
+            android:title="@string/temp_title"
+            android:summary="@string/temp_summary"
+            android:dialogTitle="@string/temp_dialog_title"
+            android:icon="@drawable/ic_thermometer"
+            app:layout="@layout/preference_item_material" />
+
+        <ListPreference
+            android:key="@string/wind_unit_pref_key"
+            android:title="@string/wind_title"
+            android:summary="@string/wind_summary"
+            android:dialogTitle="@string/wind_dialog_title"
+            android:icon="@drawable/ic_wind"
+            app:layout="@layout/preference_item_material" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

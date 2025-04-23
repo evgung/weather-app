@@ -5,7 +5,6 @@ import com.example.weatherapp.data.weather.model.processed.DailyWeather
 import com.example.weatherapp.data.weather.model.processed.HourlyWeather
 import com.example.weatherapp.data.weather.model.processed.WeatherConverter
 import com.example.weatherapp.data.weather.model.raw.WeatherInfo
-import com.example.weatherapp.ui.UserParameters
 import kotlin.math.roundToInt
 
 enum class ForecastType {
