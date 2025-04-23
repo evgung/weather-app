@@ -62,13 +62,29 @@ class WeatherViewModel(
     }
 
     private suspend fun loadCurrentWeather(preferences: UserPreferences) =
-        repository.getCurrentWeather(preferences.city.apiName, ApiParameters.currentParams)
+        repository.getCurrentWeather(
+            preferences.city.apiName,
+            ApiParameters.currentParams,
+            preferences.tempUnit.apiName,
+            preferences.windUnit.apiName
+        )
 
     private suspend fun loadHourlyWeather(preferences: UserPreferences) =
-        repository.getHourlyWeather(preferences.city.apiName, ApiParameters.hourlyParams)
+        repository.getHourlyWeather(
+            preferences.city.apiName,
+            ApiParameters.hourlyParams,
+            preferences.tempUnit.apiName,
+            preferences.windUnit.apiName
+        )
 
     private suspend fun loadDailyWeather(preferences: UserPreferences) =
-        repository.getDailyWeather(preferences.city.apiName, ApiParameters.dailyParams, ApiParameters.daysCountForDailyWeather)
+        repository.getDailyWeather(
+            preferences.city.apiName,
+            ApiParameters.dailyParams,
+            preferences.tempUnit.apiName,
+            preferences.windUnit.apiName,
+            ApiParameters.daysCountForDailyWeather
+        )
 
 }
 

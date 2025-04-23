@@ -5,6 +5,7 @@ import com.example.weatherapp.data.weather.model.processed.DailyWeather
 import com.example.weatherapp.data.weather.model.processed.HourlyWeather
 import com.example.weatherapp.data.weather.model.processed.WeatherConverter
 import com.example.weatherapp.data.weather.model.raw.WeatherInfo
+import com.example.weatherapp.ui.enums.TemperatureUnit
 import kotlin.math.roundToInt
 
 enum class ForecastType {
@@ -18,26 +19,34 @@ interface WeatherRepository {
         lon: Double,
         forecastDays: Int,
         forecastType: ForecastType,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String
     ) : WeatherInfo
 
     suspend fun getCurrentWeather(
         lat: Double,
         lon: Double,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String
     ) : CurrentWeather
 
     suspend fun getHourlyWeather(
         lat: Double,
         lon: Double,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String
     ) : List<HourlyWeather>
 
     suspend fun getDailyWeather(
         lat: Double,
         lon: Double,
         params: List<String>,
-        forecastDays: Int
+        temperatureUnit: String,
+        windSpeedUnit: String,
+        forecastDays: Int,
     ) : List<DailyWeather>
 
 }
@@ -51,7 +60,9 @@ class NetworkWeatherRepository(
         lon: Double,
         forecastDays: Int,
         forecastType: ForecastType,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String
     ): WeatherInfo = when (forecastType) {
 
         ForecastType.CURRENT -> weatherApi.getWeather(
@@ -60,6 +71,8 @@ class NetworkWeatherRepository(
             params.joinToString(","),
             null,
             null,
+            temperatureUnit,
+            windSpeedUnit,
             forecastDays
         )
 
@@ -69,6 +82,8 @@ class NetworkWeatherRepository(
             null,
             params.joinToString(","),
             null,
+            temperatureUnit,
+            windSpeedUnit,
             forecastDays
         )
 
@@ -78,6 +93,8 @@ class NetworkWeatherRepository(
             null,
             null,
             params.joinToString(","),
+            temperatureUnit,
+            windSpeedUnit,
             forecastDays
         )
     }
@@ -85,9 +102,20 @@ class NetworkWeatherRepository(
     override suspend fun getCurrentWeather(
         lat: Double,
         lon: Double,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String
     ): CurrentWeather {
-        val weather = getWeather(lat, lon, 1, ForecastType.CURRENT, params).current
+        val weather = getWeather(
+            lat,
+            lon,
+            1,
+            ForecastType.CURRENT,
+            params,
+            temperatureUnit,
+            windSpeedUnit
+        ).current
+
         return CurrentWeather(
             weather?.time,
             weather?.interval,
@@ -95,16 +123,27 @@ class NetworkWeatherRepository(
             weather?.relativeHumidity,
             weather?.apparentTemperature?.roundToInt(),
             WeatherConverter.weatherCodeToString(weather?.weatherCode),
-            WeatherConverter.pressureTommhg(weather?.pressureMsl)
+            WeatherConverter.pressureTommhg(weather?.pressureMsl),
+            weather?.windSpeed?.roundToInt()
         )
     }
 
     override suspend fun getHourlyWeather(
         lat: Double,
         lon: Double,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String
     ): List<HourlyWeather> {
-        val weather = getWeather(lat, lon, 1, ForecastType.HOURLY, params).hourly
+        val weather = getWeather(
+            lat,
+            lon,
+            1,
+            ForecastType.HOURLY,
+            params,
+            temperatureUnit,
+            windSpeedUnit
+        ).hourly
         val result: MutableList<HourlyWeather> = mutableListOf()
         if (weather == null)
             return result
@@ -124,9 +163,19 @@ class NetworkWeatherRepository(
         lat: Double,
         lon: Double,
         params: List<String>,
-        forecastDays: Int
+        temperatureUnit: String,
+        windSpeedUnit: String,
+        forecastDays: Int,
     ): List<DailyWeather> {
-        val weather = getWeather(lat, lon, forecastDays, ForecastType.DAILY, params).daily
+        val weather = getWeather(
+            lat,
+            lon,
+            forecastDays,
+            ForecastType.DAILY,
+            params,
+            temperatureUnit,
+            windSpeedUnit
+        ).daily
         val result: MutableList<DailyWeather> = mutableListOf()
         if (weather == null)
             return result

@@ -132,6 +132,24 @@
                     tools:text="750 мм рт.ст."/>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llWind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Скорость ветра: "/>
+
+                <TextView
+                    android:id="@+id/tvWind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="2 м/с"/>
+            </LinearLayout>
+
         </LinearLayout>
 
 

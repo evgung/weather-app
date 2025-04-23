@@ -92,17 +92,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showCurrentWeather(weather: CurrentWeather) {
         with (binding) {
-            tvTemperature.text = getStringWithoutSpace(weather.temperature, userPrefManager.preferences.tempUnit.displayName)
+            tvTemperature.text = getString(R.string.weather_without_space, weather.temperature, userPrefManager.preferences.tempUnit.displayName)
             tvWeather.text = weather.weatherType
-            tvApparentTemperature.text = getStringWithoutSpace(weather.apparentTemperature, userPrefManager.preferences.tempUnit.displayName)
+            tvApparentTemperature.text = getString(R.string.weather_without_space, weather.apparentTemperature, userPrefManager.preferences.tempUnit.displayName)
             tvHumidity.text = getString(R.string.humidity, weather.relativeHumidity)
-            tvPressure.text = getStringWithSpace(weather.pressure, "мм рт.ст.")
+            tvPressure.text = getString(R.string.pressure, weather.pressure)
+            tvWind.text = getString(R.string.weather_with_space, weather.windSpeed, userPrefManager.preferences.windUnit.displayName)
         }
     }
-
-    private fun getStringWithSpace(value: Int?, unit: String)
-        = getString(R.string.weather_with_space, value, unit)
-
-    private fun getStringWithoutSpace(value: Int?, unit: String)
-        = getString(R.string.weather_without_space, value, unit)
 }

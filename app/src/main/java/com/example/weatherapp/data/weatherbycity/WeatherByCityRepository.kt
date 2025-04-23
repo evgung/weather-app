@@ -13,23 +13,31 @@ interface IWeatherByCityRepository {
         cityName: String,
         forecastDays: Int,
         forecastType: ForecastType,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String,
     ) : WeatherInfo
 
     suspend fun getCurrentWeather(
         cityName: String,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String,
     ) : CurrentWeather
 
     suspend fun getHourlyWeather(
         cityName: String,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String,
     ) : List<HourlyWeather>
 
     suspend fun getDailyWeather(
         cityName: String,
         params: List<String>,
-        forecastDays: Int
+        temperatureUnit: String,
+        windSpeedUnit: String,
+        forecastDays: Int,
     ) : List<DailyWeather>
 }
 
@@ -42,7 +50,9 @@ class WeatherByCityRepository(
         cityName: String,
         forecastDays: Int,
         forecastType: ForecastType,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String,
     ) : WeatherInfo {
         val city = cityRepository.getCityInfo(cityName)
         val weather = weatherRepository.getWeather(
@@ -50,33 +60,43 @@ class WeatherByCityRepository(
             city.longitude,
             forecastDays,
             forecastType,
-            params
+            params,
+            temperatureUnit,
+            windSpeedUnit
         )
         return weather
     }
 
     override suspend fun getCurrentWeather(
         cityName: String,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String,
     ): CurrentWeather {
         val city = cityRepository.getCityInfo(cityName)
         val weather = weatherRepository.getCurrentWeather(
             city.latitude,
             city.longitude,
-            params
+            params,
+            temperatureUnit,
+            windSpeedUnit
         )
         return weather
     }
 
     override suspend fun getHourlyWeather(
         cityName: String,
-        params: List<String>
+        params: List<String>,
+        temperatureUnit: String,
+        windSpeedUnit: String,
     ): List<HourlyWeather> {
         val city = cityRepository.getCityInfo(cityName)
         val weather = weatherRepository.getHourlyWeather(
             city.latitude,
             city.longitude,
-            params
+            params,
+            temperatureUnit,
+            windSpeedUnit
         )
         return weather
     }
@@ -84,13 +104,17 @@ class WeatherByCityRepository(
     override suspend fun getDailyWeather(
         cityName: String,
         params: List<String>,
-        forecastDays: Int
+        temperatureUnit: String,
+        windSpeedUnit: String,
+        forecastDays: Int,
     ): List<DailyWeather> {
         val city = cityRepository.getCityInfo(cityName)
         val weather = weatherRepository.getDailyWeather(
             city.latitude,
             city.longitude,
             params,
+            temperatureUnit,
+            windSpeedUnit,
             forecastDays
         )
         return weather

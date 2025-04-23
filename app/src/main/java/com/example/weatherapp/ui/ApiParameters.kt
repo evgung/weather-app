@@ -10,6 +10,7 @@ object ApiParameters {
         "apparent_temperature",
         "weather_code",
         "pressure_msl",
+        "wind_speed_10m"
     )
 
     val hourlyParams = listOf(

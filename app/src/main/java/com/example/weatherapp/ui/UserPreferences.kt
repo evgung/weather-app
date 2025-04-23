@@ -12,11 +12,13 @@ import com.example.weatherapp.R
 import com.example.weatherapp.data.weatherbycity.WeatherByCityRepository
 import com.example.weatherapp.ui.enums.City
 import com.example.weatherapp.ui.enums.TemperatureUnit
+import com.example.weatherapp.ui.enums.WindSpeedUnit
 import com.example.weatherapp.ui.viewmodels.WeatherViewModel
 
 data class UserPreferences (
     val city: City,
-    val tempUnit: TemperatureUnit
+    val tempUnit: TemperatureUnit,
+    val windUnit: WindSpeedUnit
 )
 
 class UserPreferencesManager (
@@ -40,6 +42,7 @@ class UserPreferencesManager (
 
     val CITY_KEY = context.getString(R.string.city_pref_key)
     val TEMP_UNIT_KEY = context.getString(R.string.temp_unit_pref_key)
+    val WIND_SPEED_KEY = context.getString(R.string.wind_unit_pref_key)
 
     init {
         loadPreferences()
@@ -49,10 +52,12 @@ class UserPreferencesManager (
     fun loadPreferences() {
         val city = sharedPreferences.getString(CITY_KEY, City.default().apiName)!!
         val tempUnit = sharedPreferences.getString(TEMP_UNIT_KEY, TemperatureUnit.default().apiName)!!
+        val speedUnit = sharedPreferences.getString(WIND_SPEED_KEY, WindSpeedUnit.default().apiName)!!
 
         _preferencesLiveData.value = UserPreferences(
             City.findByApiName(city),
-            TemperatureUnit.findByApiName(tempUnit)
+            TemperatureUnit.findByApiName(tempUnit),
+            WindSpeedUnit.findByApiName(speedUnit)
         )
     }
 
