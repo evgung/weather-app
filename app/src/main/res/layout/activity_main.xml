@@ -211,12 +211,14 @@
                 android:layout_marginBottom="16dp">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/hourlyWeatherRecyclerView"
+                    android:id="@+id/hourlyRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_hourly_weather"/>
+
+
 
             </com.google.android.material.card.MaterialCardView>
 

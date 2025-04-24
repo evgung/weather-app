@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.data.city.api.NetworkCityClient
 import com.example.weatherapp.data.weather.api.NetworkWeatherClient
@@ -40,6 +41,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val weatherConverter = WeatherConverter(this)
+
+    private val hourlyScrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            binding.swipeRefreshLayout.isEnabled = newState == RecyclerView.SCROLL_STATE_IDLE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,8 +96,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         showCurrentWeather(state.weather.current)
-        binding.hourlyWeatherRecyclerView.adapter =
-            HourlyWeatherAdapter(state.weather.hourly, weatherConverter)
+        binding.hourlyRecyclerView.adapter = HourlyWeatherAdapter(state.weather.hourly, weatherConverter)
+        binding.hourlyRecyclerView.addOnScrollListener(hourlyScrollListener)
     }
 
     private fun showCurrentWeather(weather: CurrentWeather) {
