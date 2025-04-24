@@ -1,54 +1,17 @@
 package com.example.weatherapp.data.weather.api
 
-import com.example.weatherapp.data.weather.model.processed.CurrentWeather
-import com.example.weatherapp.data.weather.model.processed.DailyWeather
-import com.example.weatherapp.data.weather.model.processed.HourlyWeather
-import com.example.weatherapp.data.weather.model.processed.WeatherConverter
-import com.example.weatherapp.data.weather.model.raw.WeatherInfo
-import com.example.weatherapp.ui.enums.TemperatureUnit
-import kotlin.math.roundToInt
-
-enum class ForecastType {
-    CURRENT, HOURLY, DAILY
-}
+import com.example.weatherapp.data.weather.model.processed.*
+import com.example.weatherapp.data.weather.model.raw.*
+import com.example.weatherapp.ui.objects.ApiParameters
+import com.example.weatherapp.ui.viewmodels.UserPreferences
 
 interface WeatherRepository {
-
     suspend fun getWeather(
         lat: Double,
         lon: Double,
-        forecastDays: Int,
-        forecastType: ForecastType,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String
-    ) : WeatherInfo
-
-    suspend fun getCurrentWeather(
-        lat: Double,
-        lon: Double,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String
-    ) : CurrentWeather
-
-    suspend fun getHourlyWeather(
-        lat: Double,
-        lon: Double,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String
-    ) : List<HourlyWeather>
-
-    suspend fun getDailyWeather(
-        lat: Double,
-        lon: Double,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String,
-        forecastDays: Int,
-    ) : List<DailyWeather>
-
+        params: ApiParameters,
+        userPreferences: UserPreferences
+    ) : Weather
 }
 
 class NetworkWeatherRepository(
@@ -58,134 +21,68 @@ class NetworkWeatherRepository(
     override suspend fun getWeather(
         lat: Double,
         lon: Double,
-        forecastDays: Int,
-        forecastType: ForecastType,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String
-    ): WeatherInfo = when (forecastType) {
-
-        ForecastType.CURRENT -> weatherApi.getWeather(
+        params: ApiParameters,
+        userPreferences: UserPreferences
+    ) : Weather {
+        val response = weatherApi.getWeather(
             lat,
             lon,
-            params.joinToString(","),
-            null,
-            null,
-            temperatureUnit,
-            windSpeedUnit,
-            forecastDays
+            params.currentParams.joinToString(","),
+            params.hourlyParams.joinToString(","),
+            params.dailyParams.joinToString(","),
+            userPreferences.tempUnit.apiName,
+            userPreferences.windUnit.apiName,
+            params.daysCount
         )
 
-        ForecastType.HOURLY -> weatherApi.getWeather(
-            lat,
-            lon,
-            null,
-            params.joinToString(","),
-            null,
-            temperatureUnit,
-            windSpeedUnit,
-            forecastDays
-        )
-
-        ForecastType.DAILY -> weatherApi.getWeather(
-            lat,
-            lon,
-            null,
-            null,
-            params.joinToString(","),
-            temperatureUnit,
-            windSpeedUnit,
-            forecastDays
+        return Weather(
+            getCurrentWeather(response.current),
+            getHourlyWeather(response.hourly),
+            getDailyWeather(response.daily)
         )
     }
 
-    override suspend fun getCurrentWeather(
-        lat: Double,
-        lon: Double,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String
+    private fun getCurrentWeather(
+        weather: Current?
     ): CurrentWeather {
-        val weather = getWeather(
-            lat,
-            lon,
-            1,
-            ForecastType.CURRENT,
-            params,
-            temperatureUnit,
-            windSpeedUnit
-        ).current
-
         return CurrentWeather(
             weather?.time,
-            weather?.interval,
-            weather?.temperature?.roundToInt(),
+            weather?.weatherCode,
+            weather?.temperature,
+            weather?.apparentTemperature,
             weather?.relativeHumidity,
-            weather?.apparentTemperature?.roundToInt(),
-            WeatherConverter.weatherCodeToString(weather?.weatherCode),
-            WeatherConverter.pressureTommhg(weather?.pressureMsl),
-            weather?.windSpeed?.roundToInt()
+            weather?.pressureMsl,
+            weather?.windSpeed
         )
     }
 
-    override suspend fun getHourlyWeather(
-        lat: Double,
-        lon: Double,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String
+    private fun getHourlyWeather(
+        weather: Hourly?
     ): List<HourlyWeather> {
-        val weather = getWeather(
-            lat,
-            lon,
-            1,
-            ForecastType.HOURLY,
-            params,
-            temperatureUnit,
-            windSpeedUnit
-        ).hourly
-        val result: MutableList<HourlyWeather> = mutableListOf()
-        if (weather == null)
-            return result
+        val result = mutableListOf<HourlyWeather>()
 
-        weather.times!!.forEachIndexed { index, hour ->
+        weather?.times?.forEachIndexed { index, hour ->
             result.add(HourlyWeather(
                 hour,
-                weather.temperatures?.get(index)?.roundToInt(),
-                WeatherConverter.weatherCodeToString(weather.weatherCodes?.get(index))
+                weather.weatherCodes?.get(index),
+                weather.temperatures?.get(index)
             ))
         }
 
         return result
     }
 
-    override suspend fun getDailyWeather(
-        lat: Double,
-        lon: Double,
-        params: List<String>,
-        temperatureUnit: String,
-        windSpeedUnit: String,
-        forecastDays: Int,
+    private fun getDailyWeather(
+        weather: Daily?
     ): List<DailyWeather> {
-        val weather = getWeather(
-            lat,
-            lon,
-            forecastDays,
-            ForecastType.DAILY,
-            params,
-            temperatureUnit,
-            windSpeedUnit
-        ).daily
-        val result: MutableList<DailyWeather> = mutableListOf()
-        if (weather == null)
-            return result
+        val result = mutableListOf<DailyWeather>()
 
-        weather.days!!.forEachIndexed { index, day ->
+        weather?.days?.forEachIndexed { index, day ->
             result.add(DailyWeather(
                 day,
-                WeatherConverter.weatherCodeToString(weather.weatherCodes?.get(index)),
-                weather.maxTemperatures?.get(index)?.roundToInt(),
-                weather.minTemperatures?.get(index)?.roundToInt(),
+                weather.weatherCodes?.get(index),
+                weather.maxTemperatures?.get(index),
+                weather.minTemperatures?.get(index),
             ))
         }
 

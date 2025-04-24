@@ -2,11 +2,7 @@ package com.example.weatherapp.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.preference.PreferenceManager
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.R
@@ -15,11 +11,14 @@ import com.example.weatherapp.data.weather.api.NetworkWeatherClient
 import com.example.weatherapp.data.weather.model.processed.CurrentWeather
 import com.example.weatherapp.data.weatherbycity.WeatherByCityRepository
 import com.example.weatherapp.databinding.ActivityMainBinding
-import com.example.weatherapp.ui.UserPreferencesManager
-import com.example.weatherapp.ui.UserPreferencesManagerFactory
+import com.example.weatherapp.ui.viewmodels.UserPreferencesManager
+import com.example.weatherapp.ui.viewmodels.UserPreferencesManagerFactory
+import com.example.weatherapp.ui.adapters.HourlyWeatherAdapter
+import com.example.weatherapp.ui.objects.WeatherConverter
 import com.example.weatherapp.ui.viewmodels.WeatherUiState
 import com.example.weatherapp.ui.viewmodels.WeatherViewModel
 import com.example.weatherapp.ui.viewmodels.WeatherViewModelFactory
+import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     private val weatherViewModel: WeatherViewModel by viewModels {
         WeatherViewModelFactory(weatherRepository, userPrefManager)
     }
+
+    private val weatherConverter = WeatherConverter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     private fun showError(message: String) {
         with (binding) {
             swipeRefreshLayout.isRefreshing = false
-            tvError.visibility = View.VISIBLE
+            errorCard.visibility = View.VISIBLE
             tvError.text = message
             weatherLayout.visibility = View.GONE
         }
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     private fun showLoading() {
         with (binding) {
             swipeRefreshLayout.isRefreshing = true
-            tvError.visibility = View.GONE
+            errorCard.visibility = View.GONE
             weatherLayout.visibility = View.GONE
         }
     }
@@ -82,22 +83,24 @@ class MainActivity : AppCompatActivity() {
     private fun showWeather(state: WeatherUiState.Success) {
         with (binding) {
             swipeRefreshLayout.isRefreshing = false
-            tvError.visibility = View.GONE
+            errorCard.visibility = View.GONE
             weatherLayout.visibility = View.VISIBLE
             tvCity.text = userPrefManager.preferences.city.displayName
         }
 
-        showCurrentWeather(state.currentWeather)
+        showCurrentWeather(state.weather.current)
+        binding.hourlyWeatherRecyclerView.adapter =
+            HourlyWeatherAdapter(state.weather.hourly, weatherConverter)
     }
 
     private fun showCurrentWeather(weather: CurrentWeather) {
         with (binding) {
-            tvTemperature.text = getString(R.string.weather_without_space, weather.temperature, userPrefManager.preferences.tempUnit.displayName)
-            tvWeather.text = weather.weatherType
-            tvApparentTemperature.text = getString(R.string.weather_without_space, weather.apparentTemperature, userPrefManager.preferences.tempUnit.displayName)
+            tvTemperature.text = weatherConverter.temperatureToString(weather.temperature)
+            tvWeather.text = weatherConverter.weatherCodeToString(weather.weatherCode)
+            tvApparentTemperature.text = weatherConverter.temperatureToString(weather.apparentTemperature)
             tvHumidity.text = getString(R.string.humidity, weather.relativeHumidity)
-            tvPressure.text = getString(R.string.pressure, weather.pressure)
-            tvWind.text = getString(R.string.weather_with_space, weather.windSpeed, userPrefManager.preferences.windUnit.displayName)
+            tvPressure.text = getString(R.string.pressure, weatherConverter.pressureTommhg(weather.pressure))
+            tvWind.text = getString(R.string.weather_with_space, weather.windSpeed?.roundToInt(), userPrefManager.preferences.windUnit.displayName)
         }
     }
 }

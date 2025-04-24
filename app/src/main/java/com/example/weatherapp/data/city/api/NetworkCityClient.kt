@@ -12,7 +12,7 @@ interface CityClient {
 
 class NetworkCityClient : CityClient {
     private val BASE_URL = "https://api.api-ninjas.com/v1/"
-    private val API_KEY = "5e2Dzwx8C8mhzCoTdOPSQQ==YiQ6GCAuXLQqCjs4"
+    private val API_KEY = "wcgZNuS+R9frB+UnoUz95A==BFsnIzy4CaqPsmX0"
 
     private val retrofit: Retrofit =
         Retrofit.Builder()

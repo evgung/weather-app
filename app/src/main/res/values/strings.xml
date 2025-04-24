@@ -4,6 +4,7 @@
     <string name="weather_without_space">%1$d%2$s</string>
     <string name="humidity">%1$d%%</string>
     <string name="pressure">%1$d мм рт.ст.</string>
+    <string name="temperature">%1$d°</string>
 
     <string name="city_pref_key">city</string>
     <string name="temp_unit_pref_key">tempUnit</string>
@@ -20,4 +21,5 @@
     <string name="wind_title">Скорость ветра</string>
     <string name="wind_summary">м/с или км/ч</string>
     <string name="wind_dialog_title">Единицы измерения скорости ветра</string>
+    <string name="feels_like">Ощущается как:</string>
 </resources>

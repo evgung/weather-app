@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui
+package com.example.weatherapp.ui.viewmodels
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -9,11 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.example.weatherapp.R
-import com.example.weatherapp.data.weatherbycity.WeatherByCityRepository
 import com.example.weatherapp.ui.enums.City
 import com.example.weatherapp.ui.enums.TemperatureUnit
 import com.example.weatherapp.ui.enums.WindSpeedUnit
-import com.example.weatherapp.ui.viewmodels.WeatherViewModel
 
 data class UserPreferences (
     val city: City,

@@ -1,16 +1,9 @@
 package com.example.weatherapp.ui.activities
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.preference.ListPreference
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.weatherapp.R
-import com.example.weatherapp.ui.UserPreferencesManager
-import com.example.weatherapp.ui.UserPreferencesManagerFactory
 import com.example.weatherapp.ui.enums.City
 import com.example.weatherapp.ui.enums.TemperatureUnit
 import com.example.weatherapp.ui.enums.WindSpeedUnit

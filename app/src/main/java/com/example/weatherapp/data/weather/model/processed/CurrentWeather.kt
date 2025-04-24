@@ -3,12 +3,11 @@ package com.example.weatherapp.data.weather.model.processed
 data class CurrentWeather (
 
     val time                : String? = null,
-    val interval            : Int?    = null,
-    val temperature         : Int?    = null,
+    val weatherCode         : Int?    = null,
+    val temperature         : Double? = null,
+    val apparentTemperature : Double? = null,
     val relativeHumidity    : Int?    = null,
-    val apparentTemperature : Int?    = null,
-    val weatherType         : String? = null,
-    val pressure            : Int?    = null,
-    val windSpeed           : Int?    = null,
+    val pressure            : Double? = null,
+    val windSpeed           : Double? = null,
 
 )

@@ -3,7 +3,7 @@ package com.example.weatherapp.data.weather.model.raw
 import com.google.gson.annotations.SerializedName
 
 
-data class WeatherInfo (
+data class WeatherResponse (
 
   @SerializedName("latitude"              ) var latitude             : Double?       = null,
   @SerializedName("longitude"             ) var longitude            : Double?       = null,

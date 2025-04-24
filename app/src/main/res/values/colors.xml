@@ -2,8 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#757575</color>
-    <color name="gray_600">#757575</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#424242</color>
+    <color name="error_background">#B71C1C</color>
+    <color name="error_text">#FFFFFF</color>
 </resources>
