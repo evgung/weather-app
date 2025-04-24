@@ -25,9 +25,9 @@ class HourlyWeatherAdapter(
         val item = items[position]
 
         with (holder.binding) {
-            tvTime.text = weatherConverter.isoTimeToHHMM(item.time)
+            tvTime.text = weatherConverter.isoTimeToTime(item.time)
             tvTemp.text = weatherConverter.temperatureToString(item.temperature)
-            tvHourlyWeather.text = weatherConverter.weatherCodeToString(item.weatherCode)
+            ivHourlyWeather.setImageResource(weatherConverter.weatherCodeToIconId(item.weatherCode, item.isDay))
         }
     }
 

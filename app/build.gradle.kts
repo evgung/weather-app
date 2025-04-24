@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidsvg)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

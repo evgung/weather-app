@@ -4,6 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#424242</color>
+    <color name="block_title">#acd3fc</color>
     <color name="error_background">#B71C1C</color>
     <color name="error_text">#FFFFFF</color>
 </resources>

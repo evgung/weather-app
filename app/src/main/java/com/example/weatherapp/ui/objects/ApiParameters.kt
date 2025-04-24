@@ -16,12 +16,14 @@ object DefaultApiParameters : ApiParameters {
         "apparent_temperature",
         "weather_code",
         "pressure_msl",
-        "wind_speed_10m"
+        "wind_speed_10m",
+        "is_day"
     )
 
     override val hourlyParams: List<String> = listOf(
         "temperature_2m",
         "weather_code",
+        "is_day"
     )
 
     override val dailyParams: List<String> = listOf(

@@ -23,20 +23,20 @@
             android:layout_height="wrap_content"
             app:cardElevation="4dp"
             app:cardCornerRadius="12dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/tvCity"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="15dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/roboto_condensed_bold"
@@ -48,6 +48,7 @@
                     style="@style/IconButton"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
+                    android:layout_marginEnd="10dp"
                     app:icon="@drawable/ic_settings"
                     app:iconTint="@color/primary_text"/>
             </LinearLayout>
@@ -59,31 +60,56 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Основной блок погоды -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/current_weather"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/block_title"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Текущая погода -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="16dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="24dp"
+                    android:paddingHorizontal="24dp"
+                    android:paddingVertical="12dp"
                     android:gravity="center_horizontal">
 
-                    <!-- Текущая температура -->
-                    <TextView
-                        android:id="@+id/tvTemperature"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="72sp"
-                        android:fontFamily="@font/roboto_light"
-                        android:textColor="@color/primary_text"
-                        android:includeFontPadding="false"
-                        tools:text="+24°"/>
+                        android:gravity="center">
+
+                        <!-- Текущая температура -->
+                        <TextView
+                            android:id="@+id/tvTemperature"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="72sp"
+                            android:fontFamily="@font/roboto_light"
+                            android:textColor="@color/primary_text"
+                            android:includeFontPadding="false"
+                            tools:text="+24°"/>
+
+                        <ImageView
+                            android:id="@+id/ivCurrentWeather"
+                            android:layout_width="82dp"
+                            android:layout_height="82dp"
+                            android:scaleType="fitXY"
+                            tools:src="@drawable/ic_clear_day"/>
+
+                    </LinearLayout>
 
                     <!-- Описание погоды -->
                     <TextView
@@ -93,14 +119,13 @@
                         android:textSize="22sp"
                         android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/secondary_text"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="3dp"
                         tools:text="Солнечно"/>
 
                     <!-- Ощущается как -->
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -203,12 +228,23 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/hourly_weather"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/block_title"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Почасовая погода -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="6dp"
                 app:cardCornerRadius="16dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="5dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/hourlyRecyclerView"
@@ -218,7 +254,32 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_hourly_weather"/>
 
+            </com.google.android.material.card.MaterialCardView>
 
+            <TextView
+                android:id="@+id/tvDailyTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/block_title"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Ежедневная погода -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dailyRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_daily_weather"/>
 
             </com.google.android.material.card.MaterialCardView>
 

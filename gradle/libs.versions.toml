@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.0"
+androidsvg = "1.4"
 fragmentKtx = "1.8.6"
 kotlin = "1.9.24"
 coreKtx = "1.15.0"
@@ -17,6 +18,7 @@ swiperefreshlayout = "1.1.0"
 preferenceKtx = "1.2.1"
 
 [libraries]
+androidsvg = { module = "com.caverock:androidsvg", version.ref = "androidsvg" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleLivedataKtx" }

@@ -1,20 +1,26 @@
 package com.example.weatherapp.ui.activities
 
+import android.animation.ValueAnimator
 import android.content.Intent
+import android.graphics.RectF
+import android.graphics.drawable.PictureDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.caverock.androidsvg.SVG
 import com.example.weatherapp.R
 import com.example.weatherapp.data.city.api.NetworkCityClient
 import com.example.weatherapp.data.weather.api.NetworkWeatherClient
 import com.example.weatherapp.data.weather.model.processed.CurrentWeather
 import com.example.weatherapp.data.weatherbycity.WeatherByCityRepository
 import com.example.weatherapp.databinding.ActivityMainBinding
+import com.example.weatherapp.ui.adapters.DailyWeatherAdapter
 import com.example.weatherapp.ui.viewmodels.UserPreferencesManager
 import com.example.weatherapp.ui.viewmodels.UserPreferencesManagerFactory
 import com.example.weatherapp.ui.adapters.HourlyWeatherAdapter
+import com.example.weatherapp.ui.objects.DefaultApiParameters
 import com.example.weatherapp.ui.objects.WeatherConverter
 import com.example.weatherapp.ui.viewmodels.WeatherUiState
 import com.example.weatherapp.ui.viewmodels.WeatherViewModel
@@ -42,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private val weatherConverter = WeatherConverter(this)
 
-    private val hourlyScrollListener = object : RecyclerView.OnScrollListener() {
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             binding.swipeRefreshLayout.isEnabled = newState == RecyclerView.SCROLL_STATE_IDLE
         }
@@ -93,11 +99,16 @@ class MainActivity : AppCompatActivity() {
             errorCard.visibility = View.GONE
             weatherLayout.visibility = View.VISIBLE
             tvCity.text = userPrefManager.preferences.city.displayName
+            tvDailyTitle.text = getString(R.string.daily_weather, DefaultApiParameters.daysCount)
+
+            hourlyRecyclerView.adapter = HourlyWeatherAdapter(state.weather.hourly, weatherConverter)
+            hourlyRecyclerView.addOnScrollListener(scrollListener)
+
+            dailyRecyclerView.adapter = DailyWeatherAdapter(state.weather.daily, weatherConverter)
+            dailyRecyclerView.addOnScrollListener(scrollListener)
         }
 
         showCurrentWeather(state.weather.current)
-        binding.hourlyRecyclerView.adapter = HourlyWeatherAdapter(state.weather.hourly, weatherConverter)
-        binding.hourlyRecyclerView.addOnScrollListener(hourlyScrollListener)
     }
 
     private fun showCurrentWeather(weather: CurrentWeather) {
@@ -108,6 +119,7 @@ class MainActivity : AppCompatActivity() {
             tvHumidity.text = getString(R.string.humidity, weather.relativeHumidity)
             tvPressure.text = getString(R.string.pressure, weatherConverter.pressureTommhg(weather.pressure))
             tvWind.text = getString(R.string.weather_with_space, weather.windSpeed?.roundToInt(), userPrefManager.preferences.windUnit.displayName)
+            ivCurrentWeather.setImageResource(weatherConverter.weatherCodeToIconId(weather.weatherCode, weather.isDay))
         }
     }
 }

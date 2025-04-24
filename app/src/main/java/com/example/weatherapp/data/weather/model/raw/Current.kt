@@ -12,6 +12,7 @@ data class Current (
   @SerializedName("apparent_temperature" ) var apparentTemperature : Double? = null,
   @SerializedName("weather_code"         ) var weatherCode         : Int?    = null,
   @SerializedName("pressure_msl"         ) var pressureMsl         : Double? = null,
-  @SerializedName("wind_speed_10m"       ) var windSpeed           : Double? = null
+  @SerializedName("wind_speed_10m"       ) var windSpeed           : Double? = null,
+  @SerializedName("is_day"               ) var isDay               : Int?    = null
 
 )
