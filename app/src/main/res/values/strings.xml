@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">Моя погода</string>
     <string name="weather_with_space">%1$d %2$s</string>
     <string name="weather_without_space">%1$d%2$s</string>
     <string name="humidity">%1$d%%</string>
