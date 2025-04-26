@@ -4,7 +4,9 @@ import android.content.Context
 import com.example.weatherapp.R
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
+import kotlin.math.sign
 
 class WeatherConverter (
         private val context: Context
@@ -14,11 +16,14 @@ class WeatherConverter (
 
     fun temperatureToString(temperature: Double?): String {
         val temperatureInt = temperature?.roundToInt()
-        var string = context.getString(R.string.temperature, temperatureInt)
+        val sign = temperatureInt?.sign
+        val temperatureValue = temperatureInt?.absoluteValue
+        var string = context.getString(R.string.temperature, temperatureValue)
+
         if (temperatureInt != null) {
-                if (temperatureInt > 0)
+                if (sign == 1)
                         string = "+$string"
-                else if (temperatureInt < 0)
+                else if (sign == -1)
                         string = "–$string"
         }
         return string
