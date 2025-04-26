@@ -52,7 +52,8 @@ class NetworkWeatherRepository(
             weather?.apparentTemperature,
             weather?.relativeHumidity,
             weather?.pressureMsl,
-            weather?.windSpeed
+            weather?.windSpeed,
+            weather?.weatherCode == 1
         )
     }
 
@@ -65,7 +66,8 @@ class NetworkWeatherRepository(
             result.add(HourlyWeather(
                 hour,
                 weather.weatherCodes?.get(index),
-                weather.temperatures?.get(index)
+                weather.temperatures?.get(index),
+                weather.isDay?.get(index) == 1
             ))
         }
 

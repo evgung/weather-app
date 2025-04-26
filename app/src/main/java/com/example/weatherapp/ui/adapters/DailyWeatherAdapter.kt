@@ -28,7 +28,7 @@ class DailyWeatherAdapter (
             tvDate.text = weatherConverter.isoTimeToDate(item.day)
             tvMaxTemp.text = weatherConverter.temperatureToString(item.maxTemperature)
             tvMinTemp.text = weatherConverter.temperatureToString(item.minTemperature)
-            ivDailyWeather.setImageResource(weatherConverter.weatherCodeToIconId(item.weatherCode, 1))
+            ivDailyWeather.setImageResource(weatherConverter.weatherCodeToIconId(item.weatherCode, true))
         }
     }
 

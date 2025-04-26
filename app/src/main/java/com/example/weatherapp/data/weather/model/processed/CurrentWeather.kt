@@ -9,6 +9,6 @@ data class CurrentWeather (
     val relativeHumidity    : Int?     = null,
     val pressure            : Double?  = null,
     val windSpeed           : Double?  = null,
-    val isDay               : Int?     = null
+    val isDay               : Boolean? = null
 
 )

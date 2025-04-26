@@ -50,10 +50,10 @@ class WeatherConverter (
             else -> null
         }
 
-        fun weatherCodeToIconId(weatherCode: Int?, isDay: Int?) : Int
+        fun weatherCodeToIconId(weatherCode: Int?, isDay: Boolean?) : Int
         = when (weatherCode) {
-                0, 1 -> if (isDay == 1) R.drawable.ic_clear_day else R.drawable.ic_clear_night
-                2 -> if (isDay == 1) R.drawable.ic_cloudy_day else R.drawable.ic_cloudy_night
+                0, 1 -> if (isDay == true) R.drawable.ic_clear_day else R.drawable.ic_clear_night
+                2 -> if (isDay == true) R.drawable.ic_cloudy_day else R.drawable.ic_cloudy_night
                 3 -> R.drawable.ic_cloudy
                 45, 48 -> R.drawable.ic_fog
                 51, 53, 55 -> R.drawable.ic_rainy_1
