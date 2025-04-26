@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 
 data class Current (
 
-  @SerializedName("time"                 ) var time                : String? = null,
-  @SerializedName("interval"             ) var interval            : Int?    = null,
-  @SerializedName("temperature_2m"       ) var temperature         : Double? = null,
-  @SerializedName("relative_humidity_2m" ) var relativeHumidity    : Int?    = null,
-  @SerializedName("apparent_temperature" ) var apparentTemperature : Double? = null,
-  @SerializedName("weather_code"         ) var weatherCode         : Int?    = null,
-  @SerializedName("pressure_msl"         ) var pressureMsl         : Double? = null,
-  @SerializedName("wind_speed_10m"       ) var windSpeed           : Double? = null,
-  @SerializedName("is_day"               ) var isDay               : Int?    = null
+  @SerializedName("time"                 ) val time                : String,
+  @SerializedName("interval"             ) val interval            : Int,
+  @SerializedName("temperature_2m"       ) val temperature         : Double? = null,
+  @SerializedName("relative_humidity_2m" ) val relativeHumidity    : Int?    = null,
+  @SerializedName("apparent_temperature" ) val apparentTemperature : Double? = null,
+  @SerializedName("weather_code"         ) val weatherCode         : Int?    = null,
+  @SerializedName("pressure_msl"         ) val pressureMsl         : Double? = null,
+  @SerializedName("wind_speed_10m"       ) val windSpeed           : Double? = null,
+  @SerializedName("is_day"               ) val isDay               : Int?    = null
 
 )

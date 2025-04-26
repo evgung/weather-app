@@ -10,11 +10,10 @@ interface CityRepository {
 
 class NetworkCityRepository (
     private val cityApi: CityApi,
-    private val apiKey: String,
 ) : CityRepository {
 
     override suspend fun getCityInfo(cityName: String): CityInfo {
-        return cityApi.getCityInfo(cityName, apiKey).first()
+        return cityApi.getCityInfo(cityName).results.first()
     }
 
 }

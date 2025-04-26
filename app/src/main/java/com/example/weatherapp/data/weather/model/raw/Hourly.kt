@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 
 data class Hourly (
 
-  @SerializedName("time"           ) var times          : List<String>? = null,
-  @SerializedName("temperature_2m" ) var temperatures   : List<Double>? = null,
-  @SerializedName("weather_code"   ) var weatherCodes   : List<Int>?    = null,
-  @SerializedName("is_day"         ) var isDay          : List<Int>?    = null
+  @SerializedName("time"           ) val times          : List<String>,
+  @SerializedName("temperature_2m" ) val temperatures   : List<Double>? = null,
+  @SerializedName("weather_code"   ) val weatherCodes   : List<Int>?    = null,
+  @SerializedName("is_day"         ) val isDay          : List<Int>?    = null
 
 )

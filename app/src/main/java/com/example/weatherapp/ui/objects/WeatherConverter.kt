@@ -9,17 +9,20 @@ import kotlin.math.roundToInt
 class WeatherConverter (
         private val context: Context
 ) {
-        fun pressureTommhg(pressurehPa: Double?): Int?
-                = pressurehPa?.let { (it * 0.750062).roundToInt() }
+    fun pressureTommhg(pressurehPa: Double?): Int?
+        = pressurehPa?.let { (it * 0.750062).roundToInt() }
 
-
-        fun temperatureToString(temperature: Double?): String {
-                val temperatureInt = temperature?.roundToInt()
-                var string = context.getString(R.string.temperature, temperatureInt)
-                if (temperatureInt != null && temperatureInt > 0)
+    fun temperatureToString(temperature: Double?): String {
+        val temperatureInt = temperature?.roundToInt()
+        var string = context.getString(R.string.temperature, temperatureInt)
+        if (temperatureInt != null) {
+                if (temperatureInt > 0)
                         string = "+$string"
-                return string
+                else if (temperatureInt < 0)
+                        string = "–$string"
         }
+        return string
+    }
 
         fun isoTimeToTime(time: String?) : String
                 = convertIsoTime(time, "yyyy-MM-dd'T'HH:mm", "HH:mm")

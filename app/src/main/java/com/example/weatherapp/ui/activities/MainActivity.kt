@@ -1,15 +1,11 @@
 package com.example.weatherapp.ui.activities
 
-import android.animation.ValueAnimator
 import android.content.Intent
-import android.graphics.RectF
-import android.graphics.drawable.PictureDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.caverock.androidsvg.SVG
 import com.example.weatherapp.R
 import com.example.weatherapp.data.city.api.NetworkCityClient
 import com.example.weatherapp.data.weather.api.NetworkWeatherClient

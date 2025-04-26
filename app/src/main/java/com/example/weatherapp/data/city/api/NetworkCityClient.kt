@@ -11,8 +11,7 @@ interface CityClient {
 }
 
 class NetworkCityClient : CityClient {
-    private val BASE_URL = "https://api.api-ninjas.com/v1/"
-    private val API_KEY = "wcgZNuS+R9frB+UnoUz95A==BFsnIzy4CaqPsmX0"
+    private val BASE_URL = "https://geocoding-api.open-meteo.com/v1/"
 
     private val retrofit: Retrofit =
         Retrofit.Builder()
@@ -25,6 +24,6 @@ class NetworkCityClient : CityClient {
     }
 
     override val repository: CityRepository by lazy {
-        NetworkCityRepository(cityApi, API_KEY)
+        NetworkCityRepository(cityApi)
     }
 }
