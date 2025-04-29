@@ -53,7 +53,7 @@ class NetworkWeatherRepository(
             weather?.relativeHumidity,
             weather?.pressureMsl,
             weather?.windSpeed,
-            weather?.weatherCode == 1
+            weather?.isDay == 1
         )
     }
 
