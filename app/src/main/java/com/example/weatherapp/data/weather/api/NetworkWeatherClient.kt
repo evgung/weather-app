@@ -3,10 +3,6 @@ package com.example.weatherapp.data.weather.api
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-interface WeatherClient {
-    val repository: WeatherRepository
-}
-
 class NetworkWeatherClient : WeatherClient {
     private val BASE_URL = "https://api.open-meteo.com/v1/"
 

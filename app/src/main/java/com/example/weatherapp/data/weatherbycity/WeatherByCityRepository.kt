@@ -10,13 +10,6 @@ import com.example.weatherapp.data.weather.model.raw.WeatherResponse
 import com.example.weatherapp.ui.objects.ApiParameters
 import com.example.weatherapp.ui.viewmodels.UserPreferences
 
-interface IWeatherByCityRepository {
-    suspend fun getWeather(
-        params: ApiParameters,
-        userPreferences: UserPreferences
-    ) : Weather
-}
-
 class WeatherByCityRepository(
     private val weatherRepository: WeatherRepository,
     private val cityRepository: CityRepository

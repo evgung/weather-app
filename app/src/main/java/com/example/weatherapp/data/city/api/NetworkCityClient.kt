@@ -6,10 +6,6 @@ import com.example.weatherapp.data.weather.api.WeatherRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-interface CityClient {
-    val repository: CityRepository
-}
-
 class NetworkCityClient : CityClient {
     private val BASE_URL = "https://geocoding-api.open-meteo.com/v1/"
 
